@@ -1,0 +1,148 @@
+{
+  "name": "apifox-gen",
+  "displayName": "apifoxGen",
+  "description": "gen apifox api to axios code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "apifoxGen",
+          "title": "apifox管理器",
+          "icon": "media/apifox.svg"
+        }
+      ]
+    },
+    "views": {
+      "apifoxGen": [
+        {
+          "id": "apifoxGen.list",
+          "name": "",
+          "type": "tree"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "apifoxGen.list",
+        "contents": "欢迎使用！暂无Cookie\n从Apifox复制请求header的Authorization\n[添加](command:apifoxGen.list.addCookie)",
+        "when": "!config.apifoxGen.cookie"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "apifoxGen.list.addCookie",
+          "when": "view == apifoxGen.list",
+          "group": "inline"
+        },
+        {
+          "command": "apifoxGen.list.addApiFloder",
+          "when": "view == apifoxGen.list",
+          "group": "inline"
+        },
+        {
+          "command": "apifoxGen.list.baseURL",
+          "when": "view == apifoxGen.list",
+          "group": "inline"
+        },
+        {
+          "command": "apifoxGen.list.refresh",
+          "when": "view == apifoxGen.list",
+          "group": "navigation",
+          "order": 0
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "apifoxGen.list.genCode",
+          "when": "view == apifoxGen.list && viewItem == apiDetail",
+          "group": "inline"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "apifoxGen.list.addCookie",
+        "title": "添加Cookie"
+      },
+      {
+        "command": "apifoxGen.list.addApiFloder",
+        "title": "项目接口目录"
+      },
+      {
+        "command": "apifoxGen.list.baseURL",
+        "title": "接口baseURL"
+      },
+      {
+        "command": "apifoxGen.list.refresh",
+        "title": "refresh",
+        "icon": "$(search-refresh)"
+      },
+      {
+        "command": "apifoxGen.list.genCode",
+        "title": "生成接口",
+        "icon": "$(symbol-interface)"
+      }
+    ],
+    "configuration": {
+      "title": "apifoxGen",
+      "properties": {
+        "apifoxGen.cookie": {
+          "type": "string",
+          "default": "",
+          "description": "apifox cookie"
+        },
+        "apifoxGen.apiFloderPath": {
+          "type": "string",
+          "scope": "resource",
+          "default": "/src/api",
+          "description": "项目接口的公共目录，减少生成接口时目录选择的层级"
+        },
+        "apifoxGen.baseURL": {
+          "type": "string",
+          "scope": "resource",
+          "default": "",
+          "description": "项目后端接口公共的路径，减少生成TS类型变量的长度"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.3",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.84.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "eslint": "^8.52.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}
