@@ -9,6 +9,7 @@ export type TProject = {
 axios.interceptors.request.use(
   (config) => {
     const cookie = workspace.getConfiguration('apifoxGen').get<string>('cookie');
+    const clientVersion = workspace.getConfiguration('apifoxGen').get<string>('clientVersion');
     
     if (cookie === '') {
       window.showWarningMessage('请先配置cookie');
@@ -16,6 +17,7 @@ axios.interceptors.request.use(
     }
     
     config.headers.Authorization = cookie;
+    config.headers['X-Client-Version'] = clientVersion;
     
     return config;
   },
@@ -29,7 +31,7 @@ export async function getProjects() {
     const res = await axios.get('https://api.apifox.com/api/v1/user-projects?locale=zh-CN');
     return res?.data?.data?.map((item: TProject) => ({ id: String(item.id), name: item.name }));
   } catch (e) {
-    throw Error('项目请求失败');
+    throw e;
   }
 }
 

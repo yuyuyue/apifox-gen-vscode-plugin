@@ -31,6 +31,8 @@ export class ListTreeProvider implements TreeDataProvider<ListItem> {
       });
       
       this._onDidChangeTreeData.fire();
+    }).catch((e) => {
+      window.showErrorMessage(e.message);
     });
   };
   
@@ -45,6 +47,24 @@ export class ListTreeProvider implements TreeDataProvider<ListItem> {
       }
       const apifoxConfig = workspace.getConfiguration('apifoxGen');
       apifoxConfig.update('cookie', v, ConfigurationTarget.Global).then(() => {
+        this.refresh();
+      });
+      window.showInformationMessage('添加成功');
+    });
+  };
+  
+  // 添加版本号
+  public clientVersion: () => void = () => { 
+    const clientVersion = workspace.getConfiguration('apifoxGen').get<string>('clientVersion');
+    window.showInputBox({
+      placeHolder: '添加版本号',
+      value: clientVersion,
+    }).then(v => {
+      if (v === '' || v === undefined || v === null) {
+        return;
+      }
+      const apifoxConfig = workspace.getConfiguration('apifoxGen');
+      apifoxConfig.update('clientVersion', v, ConfigurationTarget.Global).then(() => {
         this.refresh();
       });
       window.showInformationMessage('添加成功');

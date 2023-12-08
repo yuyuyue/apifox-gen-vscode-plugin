@@ -55,6 +55,11 @@
           "group": "inline"
         },
         {
+          "command": "apifoxGen.list.clientVersion",
+          "when": "view == apifoxGen.list",
+          "group": "inline"
+        },
+        {
           "command": "apifoxGen.list.refresh",
           "when": "view == apifoxGen.list",
           "group": "navigation",
@@ -81,6 +86,10 @@
       {
         "command": "apifoxGen.list.baseURL",
         "title": "接口baseURL"
+      },
+      {
+        "command": "apifoxGen.list.clientVersion",
+        "title": "添加版本号"
       },
       {
         "command": "apifoxGen.list.refresh",
@@ -112,6 +121,12 @@
           "scope": "resource",
           "default": "",
           "description": "项目后端接口公共的路径，减少生成TS类型变量的长度"
+        },
+        "apifoxGen.clientVersion": {
+          "type": "string",
+          "scope": "resource",
+          "default": "2.4.3-alpha.4",
+          "description": "apifox版本号，必填"
         }
       }
     }
