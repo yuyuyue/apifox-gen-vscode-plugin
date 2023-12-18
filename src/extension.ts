@@ -13,4 +13,5 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('apifoxGen.list.genCode', (node) => listTreeProvider.genCode(node));
 	vscode.commands.registerCommand('apifoxGen.list.addApiFloder', () => listTreeProvider.addApiFloder());
 	vscode.commands.registerCommand('apifoxGen.list.baseURL', () => listTreeProvider.baseURL());
+	vscode.commands.registerCommand('apifoxGen.list.clientVersion', () => listTreeProvider.clientVersion());
 }
